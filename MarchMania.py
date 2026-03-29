@@ -65,6 +65,66 @@ st.set_page_config(page_title="March Madness Predictor", layout="centered")
 
 st.title("🏀 March Madness Predictor")
 
+st.divider()
+
+st.markdown("""
+Predict outcomes for **NCAA Division I March Madness** tournaments.
+
+- Covers **Men’s and Women’s tournaments**
+- Based on machine learning ensemble models
+- Optimized for **win/loss predictions**
+
+⚠️ This tool currently supports **2026 tournament matchups only**
+""")
+
+st.divider()
+
+with st.expander("ℹ️ How to use this app"):
+    st.markdown("""
+1. Select two teams  
+2. Click **Predict Winner**  
+3. View win probabilities and predicted winner  
+
+### What the prediction means
+- Values above 50% → predicted winner  
+- Values near 50% → close matchup  
+- Values far from 50% → strong prediction  
+
+This model focuses on **direction (who wins)** rather than perfect probability calibration.
+""")
+    
+with st.expander("📊 Scope & Limitations"):
+    st.markdown("""
+- Only includes **NCAA Division I March Madness**
+- Covers **Men’s and Women’s tournaments**
+- Predictions are based on **precomputed matchups**
+- Does NOT account for:
+  - injuries
+  - roster changes
+  - live game conditions
+
+Future versions will include real-time model inference.
+""")
+    
+with st.expander("👤 About"):
+    st.markdown("""
+**Developer:** James Sheldon
+
+Machine learning enthusiast focused on:
+- Time-series modeling
+- Ensemble systems
+- Experimental architectures
+
+This project explores combining multiple models to improve **decision accuracy** in sports prediction.
+
+🔗 Add your links here:
+- GitHub: https://github.com/Jamesinza
+- LinkedIn: https://www.linkedin.com/in/jamesinza/
+- WebSite: https://jamessheldon.wordpress.com/
+""")
+    
+st.divider()
+
 # Tabs (better UX than radio)
 tab_men, tab_women = st.tabs(["Men", "Women"])
 
@@ -89,16 +149,33 @@ def render_league(league):
             winner = teamA if p > 0.5 else teamB
             confidence = abs(p - 0.5)
 
+            # st.markdown(f"""
+            # ### 🔮 Prediction
+
+            # **{teamA} vs {teamB}**
+
+            # - {teamA}: **{p:.2%}**
+            # - {teamB}: **{1-p:.2%}**
+
+            # ### 🏆 Winner: **{winner}**
+            # """)
+
+            st.markdown(f"## 🏆 {winner}")
+
             st.markdown(f"""
-            ### 🔮 Prediction
+            ### {teamA} vs {teamB}
 
-            **{teamA} vs {teamB}**
-
-            - {teamA}: **{p:.2%}**
-            - {teamB}: **{1-p:.2%}**
-
-            ### 🏆 Winner: **{winner}**
+            - **{teamA}**: {p:.2%}  
+            - **{teamB}**: {1-p:.2%}
             """)
+
+            # Confidence label
+            if confidence > 0.25:
+                st.success("High confidence prediction")
+            elif confidence > 0.1:
+                st.info("Moderate confidence")
+            else:
+                st.warning("Close matchup")
 
             st.progress(min(confidence * 2, 1.0))
 

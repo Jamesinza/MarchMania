@@ -201,7 +201,7 @@ Machine learning enthusiast focused on:
 
 This project explores combining multiple models to improve **decision accuracy** in sports prediction.
 
-🔗 Add your links here:
+🔗 My links:
 - GitHub: https://github.com/Jamesinza
 - LinkedIn: https://www.linkedin.com/in/jamesinza/
 - WebSite: https://jamessheldon.wordpress.com/
